@@ -96,9 +96,8 @@ class: text-center
 
 ---
 layout: image-left
+image: ./fielding.webp
 ---
-
-
 
 # Roy T. Fielding
 Roy Thomas Fielding (* 1965 in Laguna Beach, Kalifornien, USA) ist ein US-amerikanischer Informatiker, einer der Hauptautoren der HTTP-Spezifikation, Mitgründer und Vorsitzender der Apache Software Foundation.
@@ -107,4 +106,244 @@ Fielding erhielt im Jahr 2000 seinen Doktorgrad von der University of California
 
 http://www.ics.uci.edu/~fielding/pubs/dissertation/top.htm
 
+---
+layout: quote
+image: fielding.webp
+---
 
+<img style="float:left; margin: 1em" src="fielding.webp" width="100"/>
+
+# When given a name, a coordinated set of architectural constraints becomes an architectural style
+
+<br/>
+
+## Ein koordinierter Satz von architektonischen Einschränkungen wird zu einem Architekturstil, wenn er einen Namen erhält.
+
+---
+layout: quote
+image: fielding.webp
+---
+
+<img style="float:left; margin: 1em" src="fielding.webp" width="100"/>
+
+# **REST** is software design on the *scale* of **decades**: every detail is intended to promote software longevity and independent evolution.
+
+# Many of the constraints are directly opposed to short-term efficiency.
+
+
+## REST ist Softwaredesign für Jahrzehnte: Jedes Detail ist darauf ausgerichtet, die Langlebigkeit und unabhängige Weiterentwicklung der Software zu fördern.
+
+## Viele der Einschränkungen stehen im direkten Gegensatz zur kurzfristigen Effektivität.
+
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## 1. Server-Client
+
+```plantuml {scale: 1}
+@startuml
+node Server {
+
+}
+
+node "Client" as c1 {
+
+}
+
+node "Client" as c2{
+
+}
+
+node "Client" as c3 {
+
+}
+
+Server --> c1
+Server --> c2
+Server --> c3
+
+@enduml
+```
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## 2. Stateless
+
+```plantuml {scale: 1}
+@startuml
+node Server {
+  object "Session" as s1
+  object "Session" as s2
+  object "Session" as s3
+}
+
+node "Client" as c1 {
+
+}
+
+node "Client" as c2{
+
+}
+
+node "Client" as c3 {
+
+}
+
+s1 <--> c1
+s2 <--> c2
+s3 <--> c3
+
+@enduml
+```
+
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## 2. Stateless
+
+```plantuml {scale: 1}
+@startuml
+node Server {
+  object "Session" as s1
+  object "Session" as s2
+  object "Session" as s3
+  object "Session" as s4
+  object "Session" as s5
+  object "Session" as s6
+  object "Session" as s7
+  object "Session" as s8
+  object "Session" as s9
+}
+
+node "Client" as c1 {
+
+}
+
+node "Client" as c2{
+
+}
+
+node "Client" as c3 {
+
+}
+
+node "Client" as c4 {
+
+}
+
+node "Client" as c5{
+
+}
+
+node "Client" as c6 {
+
+}
+
+node "Client" as c7 {
+
+}
+
+node "Client" as c8 {
+
+}
+
+node "Client" as c9 {
+
+}
+
+s1 <--> c1
+s2 <--> c2
+s3 <--> c3
+s4 <--> c4
+s5 <--> c5
+s6 <--> c6
+s7 <--> c7
+s8 <--> c8
+s9 <--> c9
+
+@enduml
+```
+
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## 2. Stateless
+
+```plantuml {scale: 1}
+@startuml
+node Server {
+  object "Session" as s1
+  object "Session" as s2
+  object "Session" as s3
+  object "Session" as s4
+  object "Session" as s5
+  object "Session" as s6
+  object "Session" as s7
+  object "Session" as s8
+  object "Session" as s9
+}
+
+node server as srv2 {
+
+}
+
+node "Client" as c1 {
+
+}
+
+node "Client" as c2{
+
+}
+
+node "Client" as c3 {
+
+}
+
+node "Client" as c4 {
+
+}
+
+node "Client" as c5{
+
+}
+
+node "Client" as c6 {
+
+}
+
+node "Client" as c7 {
+
+}
+
+node "Client" as c8 {
+
+}
+
+node "Client" as c9 {
+
+}
+
+s1 <--> c1
+s2 <--> c2
+s3 <--> c3
+s4 <--> c4
+s5 <--> c5
+s6 <--> c6
+s7 <--> c7
+s8 <--> c8
+srv2 <-x-x-> c9
+
+@enduml
+```
