@@ -115,9 +115,13 @@ image: fielding.webp
 
 # When given a name, a coordinated set of architectural constraints becomes an architectural style
 
+<v-click>
+
 <br/>
 
 ## Ein koordinierter Satz von architektonischen Einschränkungen wird zu einem Architekturstil, wenn er einen Namen erhält.
+
+</v-click>
 
 ---
 layout: quote
@@ -130,10 +134,13 @@ image: fielding.webp
 
 # Many of the constraints are directly opposed to short-term efficiency.
 
+<v-click>
 
 ## REST ist Softwaredesign für Jahrzehnte: Jedes Detail ist darauf ausgerichtet, die Langlebigkeit und unabhängige Weiterentwicklung der Software zu fördern.
 
 ## Viele der Einschränkungen stehen im direkten Gegensatz zur kurzfristigen Effektivität.
+
+</v-click>
 
 ---
 layout: default
@@ -142,6 +149,23 @@ layout: default
 # Was bedeutet REST, was ist REST
 
 ## 1. Server-Client
+
+```plantuml {scale: 1}
+@startuml
+node Server {
+
+}
+
+node "Client" as c1 {
+
+}
+
+
+Server --> c1
+@enduml
+```
+
+<v-click>
 
 ```plantuml {scale: 1}
 @startuml
@@ -167,6 +191,10 @@ Server --> c3
 
 @enduml
 ```
+
+
+</v-click>
+
 ---
 layout: default
 ---
@@ -202,13 +230,7 @@ s3 <--> c3
 @enduml
 ```
 
----
-layout: default
----
-
-# Was bedeutet REST, was ist REST
-
-## 2. Stateless
+<v-click>
 
 ```plantuml {scale: 1}
 @startuml
@@ -273,6 +295,8 @@ s9 <--> c9
 @enduml
 ```
 
+</v-click>
+
 ---
 layout: default
 ---
@@ -296,7 +320,7 @@ node Server {
 }
 
 node server as srv2 {
-
+  object "Session" as s10
 }
 
 node "Client" as c1 {
@@ -334,7 +358,7 @@ node "Client" as c8 {
 node "Client" as c9 {
 
 }
-
+Server -[Hidden]> srv2
 s1 <--> c1
 s2 <--> c2
 s3 <--> c3
@@ -343,7 +367,177 @@ s5 <--> c5
 s6 <--> c6
 s7 <--> c7
 s8 <--> c8
-srv2 <-x-x-> c9
+srv2 x--x c9
 
 @enduml
 ```
+
+---
+layout: two-cols
+---
+
+<template v-slot:default>
+
+# Was bedeutet REST, was ist REST
+
+## 3. Cacheable
+
+```plantuml {scale: 1}
+@startuml
+
+node Server {
+  object "Daten" as d
+}
+
+node Client {
+
+}
+
+Client -> Server
+d --> Client
+
+@enduml
+```
+
+</template>
+
+<template v-slot:right>
+
+
+```plantuml {scale: 1}
+@startuml
+
+node Server {
+  object "Daten" as d
+}
+
+node Client {
+  object "Daten" as d2
+}
+
+Server --[hidden]> Client
+
+@enduml
+```
+
+</template>
+
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## 3. Cacheable
+
+```plantuml {scale: 1}
+@startuml
+
+node Server {
+  object "Daten" as d
+}
+
+node Client {
+
+}
+
+Client -> Server
+d --> Client
+
+@enduml
+```
+
+---
+layout: two-cols
+---
+
+<template v-slot:default>
+
+# Was bedeutet REST, was ist REST
+
+## 4. Layered System
+
+```plantuml {scale: 1}
+@startuml
+node Server {
+  object "Daten" as ds
+}
+
+node Proxy {
+ object "Daten" as dp
+}
+
+node "Client" as c1 {
+  object "Daten" as dc1
+}
+
+node "Client" as c2 {
+
+}
+
+node "Client" as c3 {
+
+}
+
+ds <-- c1
+ds --> dp
+dp --> dc1
+
+@enduml
+```
+
+</template>
+
+<template v-slot:right>
+<v-click>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+```plantuml {scale: 1}
+@startuml
+node Server {
+  object "Daten" as ds
+}
+
+node Proxy {
+ object "Daten" as dp
+}
+
+node "Client" as c1 {
+  object "Daten" as dc1
+}
+
+node "Client" as c2 {
+  object "Daten" as dc2
+}
+
+node "Client" as c3 {
+  object "Daten" as dc3
+}
+
+ds <-- c1
+ds --> dp
+dp --> dc1
+Proxy <-- c2
+dp --> dc2
+Proxy <-- c3
+dp --> dc3
+
+
+@enduml
+```
+
+</v-click>
+</template>
+
+---
+layout: default
+---
+
+https://youtu.be/kPrTMj-BK14?t=912
