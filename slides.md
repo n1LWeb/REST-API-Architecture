@@ -16,7 +16,7 @@ exportFilename: 'slidev-exported'
 # syntax highlighter, can be 'prism' or 'shiki'
 highlighter: 'prism'
 # show line numbers in code blocks
-lineNumbers: true
+lineNumbers: false
 # enable monaco editor, can be boolean, 'dev' or 'build'
 monaco: 'dev'
 # download remote assets in local using vite-plugin-remote-assets, can be boolean, 'dev' or 'build'
@@ -668,13 +668,97 @@ layout: default
 ```http
 GET / HTTP/1.1
 
-
+200 OK
+Content-Type: application/json
+{
+  "message": "Welcome to Herobook!"
+}
 
 ```
 
+---
+layout: two-cols
+---
 
+<template v-slot:default>
+
+```http
+GET /profiles HTTP/1.1
+
+200 OK
+Content-Type: application/json
+[
+  {
+    "username": "ironman",
+    "name": "Tony Stark"
+  }
+]
+```
+
+</template>
+<template v-slot:right>
+
+```http
+POST /profiles HTTP/1.1
+{
+  "username": "blackwidow",
+  "name": "Natalia Romanova"
+}
+
+201 Created
+Location: http://api.herobook.com.local/profiles/blackwidow
+{
+  "username": "Blackwidow",
+  "name": "Natalia Romanova"
+}
+```
+
+</template>
 
 ---
+layout: cover
+# random image from a curated Unsplash collection by Anthony
+# like them? see https://unsplash.com/collections/94734566/slidev
+background: https://source.unsplash.com/collection/539016/1920x1080
+# apply any windi css classes to the current slide
+class: 'text-center'
+---
+
+# Einen Tag Später
+
+---
+layout: default
+---
+
+```http
+GET /profiles HTTP/1.1
+
+200 OK
+[
+  { "username": "ironman", "name": "Tony Stark" },
+  { "username": "Blackwidow", "name": "Natalia Romanova" },
+  { "username": "spidey", "name": "Peter Parker" },
+  
+  { /* 2 Millionen Benutzer!!! /* },
+
+  { "username": "Da DevOps Architect", "name": "Marc Lucks" }
+]
+```
+
+---
+layout: cover
+# random image from a curated Unsplash collection by Anthony
+# like them? see https://unsplash.com/collections/94734566/slidev
+background: https://source.unsplash.com/collection/539016/1920x1080
+# apply any windi css classes to the current slide
+class: 'text-center'
+---
+
+# Einen Tag Später
+
+---
+
+
 
 https://youtu.be/kPrTMj-BK14?t=912
 
