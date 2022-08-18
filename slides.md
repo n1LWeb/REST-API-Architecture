@@ -948,7 +948,8 @@ GET /profiles/ironman HTTP/1.1
 200 OK
 Content-Type: application/json
 ```
-```json
+
+```json {maxHeight:'50'}
 {
   "username": "ironman",
   "name": "Tony Stark",
@@ -978,12 +979,187 @@ Content-Type: application/json
 }
 ```
 
-<style>
-pre.language-json {
-  font-size: 2
-}
-</style>
+---
+layout: default
+---
 
+```http
+GET /profiles/ironman HTTP/1.1
+
+200 OK
+Content-Type: application/json
+```
+```json
+{
+  "username": "ironman",
+  "name": "Tony Stark",
+  "friends" : [
+    { "username":"hulk", "name":"Bruce Banner",
+      "updates" : [ { . . . }, { . . . }, { . . . } ],
+      "friends" : [
+        { "updates" : { . . . } },
+        { "updates" : { . . . } },
+        { "updates" : { . . . } }
+      ]
+    },
+    { "username":"spidey", "name":"Peter Parker",
+      "updates" : [ { . . . }, { . . . }, { . . . } ]
+      "friends" : [
+        { "updates" : { . . . } },
+        { "updates" : { . . . } },
+        { "updates" : { . . . } }
+      ]
+    },
+```
+
+---
+
+```json
+    { "username":"blackwidow", "name":"Ната́ша Романов",
+      "updates" : [ { . . . }, { . . . } , { . . . } ]
+      "friends" : [
+        { "updates" : { . . . } },
+        { "updates" : { . . . } },
+        { "updates" : { . . . } }
+      ]
+    },
+    /* another 500 friends here... */
+  ],
+  "updates" : [
+    { "id" : 1234,
+      "update" : "Working a new Iron Man suit!",
+      "posted" : "2016-02-23T18:25:43.511Z"
+    },
+    { "id" : 1543,
+      "update" : "New suit's gonna have a selfie stick! Oh yeah!",
+      "posted" : "2016-04-16T18:25:43.511Z"
+    },
+    { "id" : 1782,
+      "update" : "Selfie stick broke. Oh well. Back to the drawing board",
+      "posted" : "2016-04-17T08:26:13.511Z"
+    }
+  ]
+}
+```
+
+---
+layout: cover
+# random image from a curated Unsplash collection by Anthony
+# like them? see https://unsplash.com/collections/94734566/slidev
+background: Betriebsausflug_2018_157_jpg.jpg
+# apply any windi css classes to the current slide
+class: 'text-center'
+---
+
+## Nur eine Anfrage auf eure dämliche API, und auf dem Server laufen die Arbeitsspeicher-Riegel davon! <br/>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<v-click>
+
+# Solche Probleme hatten wir mit dem GWQ Portal nicht!
+
+</v-click>
+
+---
+layout: default
+---
+
+```http
+GET /profiles/ironman HTTP/1.1
+
+200 OK
+Content-Type: application/json
+```
+```json
+{
+  "_links": {
+    "self": { "href": "/profiles/ironman"},
+    "friends": { "href": "/profiles/ironman/friends" },
+    "photos": { "href": "/profiles/ironman/photos" },
+    "updates": { "href": "/profiles/ironman/updates" },
+    
+  }
+  "username": "ironman",
+  "name": "Tony Stark",
+}
+```
+
+---
+layout: default
+---
+
+```http
+GET /profiles/ironman HTTP/1.1
+200 OK
+GET /profiles/ironman/friends HTTP/1.1
+200 OK
+GET /profiles/ironman/updates HTTP/1.1
+200 OK
+GET /profiles/ironman/photos HTTP/1.1
+200 OK
+GET /profiles/ironman/photos/1234 HTTP/1.1
+200 OK
+GET /profiles/ironman/photos/1234/comments HTTP/1.1
+200 OK
+GET /profiles/ironman/photos/1345 HTTP/1.1
+200 OK
+GET /profiles/ironman/photos/1345/comments HTTP/1.1
+200 OK
+GET /profiles/ironman/photos/1456 HTTP/1.1
+200 OK
+GET /profiles/ironman/photos/1456/comments HTTP/1.1
+200 OK
+```
+
+---
+layout: cover
+# random image from a curated Unsplash collection by Anthony
+# like them? see https://unsplash.com/collections/94734566/slidev
+background: Betriebsausflug_2018_223_jpg.jpg
+# apply any windi css classes to the current slide
+class: 'text-center'
+---
+
+## Nur eine Anfrage auf eure dämliche API, und auf dem Server laufen die Arbeitsspeicher-Riegel davon! <br/>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<v-click>
+
+# Solche Probleme hatten wir mit dem GWQ Portal nicht!
+
+</v-click>
+
+---
 
 ---
 Richardson Maturity Model
