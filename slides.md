@@ -72,7 +72,9 @@ class: 'text-center'
 
 # REST API Architektur
 
-Was und wie machen wir REST?
+## Was und wie machen wir REST?
+
+Stark angelehnt an die REST Talks von Dylan Beattie
 
 ---
 layout: full
@@ -93,6 +95,7 @@ class: text-center
 # Agenda
 
 - Was bedeutet REST, was ist REST
+- Herobook
 
 ---
 layout: image-left
@@ -540,4 +543,149 @@ dp --> dc3
 layout: default
 ---
 
+# Was bedeutet REST, was ist REST
+
+## 4. Layered System
+
+```plantuml {scale: 0.7}
+@startuml
+node Server as s1 {
+
+}
+
+node Server as s2 {
+
+}
+
+node Server as s3 {
+
+}
+
+node Server as s4 {
+
+}
+
+node Server as s5 {
+
+}
+
+node "Caching Proxy" as proxy  {
+
+}
+
+node "Security Appliance" as sa{
+
+}
+
+node "Load Balancer" as lb {
+
+}
+
+node "Client" as c1 {
+}
+
+node "Client" as c2 {
+}
+
+node "Client" as c3 {
+}
+
+proxy --> c1
+proxy --> c2
+proxy --> c3
+sa --> proxy
+lb --> sa
+s1 --> lb
+s2 --> lb
+s3 --> lb
+s4 --> lb
+s5 --> lb
+
+
+@enduml
+```
+
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## 5. Uniform Interface
+
+<br/>
+<br/>
+
+```plantuml {scale: 1.3}
+@startuml
+
+rectangle "Uniform Interface" as ui {
+  rectangle "Identification\nof Resources" as ir
+  rectangle "Manipulation\nthrough\nrepresentation" as mr
+  rectangle "Self-\ndescriptive\nmessages" as sdm
+  rectangle "Hypermedia\nas the engine\nof application\nstate" as hm
+}
+
+ir -[hidden]> mr
+sdm -[hidden]> hm
+ir --[hidden]> sdm
+mr --[hidden]> hm
+
+@enduml
+```
+
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## 6. Code on Demand (optional)
+
+Der Client kann code übertragen, welcher auf dem Client ausgeführt wird. (bisher noch in keiner API gesehen)
+
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## A Set of Architectural Contraints
+
+1. Client Server
+1. Stateless
+1. Cacheable
+1. Layered System
+1. Uniform Interface
+1. Code-on-demand (optional)
+
+---
+layout: default
+---
+
+# Herobook
+
+```http
+GET / HTTP/1.1
+
+
+
+```
+
+
+
+---
+
 https://youtu.be/kPrTMj-BK14?t=912
+
+https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
+
+Richardson Maturity Model
+
+https://martinfowler.com/articles/richardsonMaturityModel.html#level1
+
+0 – exporting an API over HTTP with methods called with arguments
+1 – Exporting resources instead of methods
+2 – Proper use of HTTP verbs
+3 – Exporting hypertext with objects that make all or part of the API discoverable.
+
