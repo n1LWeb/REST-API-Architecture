@@ -492,6 +492,7 @@ dp --> dc1
 </template>
 
 <template v-slot:right>
+
 <v-click>
 
 <br/>
@@ -537,6 +538,7 @@ dp --> dc3
 ```
 
 </v-click>
+
 </template>
 
 ---
@@ -669,8 +671,9 @@ layout: default
 GET / HTTP/1.1
 
 200 OK
-Content-Type: application/json
-{
+Content-Type: application/hal+json
+```
+```json{
   "message": "Welcome to Herobook!"
 }
 
@@ -686,7 +689,9 @@ layout: two-cols
 GET /profiles HTTP/1.1
 
 200 OK
-Content-Type: application/json
+Content-Type: application/hal+json
+```
+```json
 [
   {
     "username": "ironman",
@@ -707,6 +712,9 @@ POST /profiles HTTP/1.1
 
 201 Created
 Location: http://api.herobook.com.local/profiles/blackwidow
+Content-Type: application/hal+json
+```
+```json
 {
   "username": "Blackwidow",
   "name": "Natalia Romanova"
@@ -734,6 +742,9 @@ layout: default
 GET /profiles HTTP/1.1
 
 200 OK
+Content-Type: application/hal+json
+```
+```json
 [
   { "username": "ironman", "name": "Tony Stark" },
   { "username": "Blackwidow", "name": "Natalia Romanova" },
@@ -749,21 +760,232 @@ GET /profiles HTTP/1.1
 layout: cover
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: https://source.unsplash.com/collection/539016/1920x1080
+background: IMG_0251_JPG.jpg
 # apply any windi css classes to the current slide
 class: 'text-center'
 ---
 
-# Einen Tag Später
+# Was hast du angestellt? <br/>
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+
+<v-click>
+
+# Wir stellen wieder auf das GWQ Portal um!
+
+</v-click>
 
 ---
+layout: default
+---
 
+```http
+GET /profiles?page=1 HTTP/1.1
 
+200 OK
+Content-Type: application/hal+json
+```
+```json
+[
+  { "username": "ironman", "name": "Tony Stark" },
+  { "username": "Blackwidow", "name": "Natalia Romanova" },
+  { "username": "spidey", "name": "Peter Parker" },
+  { "username": "cap", "name": "Steve Rogers" },
+  { "username": "storm", "name": "Ororo Munroe" }
+]
+```
 
-https://youtu.be/kPrTMj-BK14?t=912
+<v-click>
+
+```http
+GET /profiles?page=2 HTTP/1.1
+200 OK
+
+GET /profiles?page=3 HTTP/1.1
+200 OK
+
+GET /profiles?page=4 HTTP/1.1
+200 OK
+
+GET /profiles?page=5 HTTP/1.1
+204 No Content
+```
+
+</v-click>
+
+---
+layout: cover
+# random image from a curated Unsplash collection by Anthony
+# like them? see https://unsplash.com/collections/94734566/slidev
+background: https://source.unsplash.com/collection/6775625/1920x1080
+# apply any windi css classes to the current slide
+class: 'text-center'
+---
+
+# Nicht REST!
+
+---
+layout: default
+---
+
+# Was bedeutet REST, was ist REST
+
+## 5. Uniform Interface
+
+<br/>
+<br/>
+
+```plantuml {scale: 1.3}
+@startuml
+
+rectangle "Uniform Interface" as ui {
+  rectangle "Identification\nof Resources" as ir
+  rectangle "Manipulation\nthrough\nrepresentation" as mr
+  rectangle "Self-\ndescriptive\nmessages" as sdm
+  rectangle "Hypermedia\nas the engine\nof application\nstate" as hm
+}
+
+ir -[hidden]> mr
+sdm -[hidden]> hm
+ir --[hidden]> sdm
+mr --[hidden]> hm
+
+@enduml
+```
+
+---
+layout: image-left
+image: fielding.webp
+---
+
+## I am getting frustrated by the number of people calling any HTTP-based interface a REST API. Today’s example is the SocialSite REST API. That is RPC. It screams RPC. There is so much coupling on display that it should be given an X rating.
 
 https://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven
 
+---
+layout: image-left
+image: fielding.webp
+---
+
+## What needs to be done to make the REST architectural style clear on the notion that hypertext is a constraint? In other words, if the engine of application state (and hence the API) is not being driven by hypertext, then it cannot be RESTful and cannot be a REST API. Period. Is there some broken manual somewhere that needs to be fixed?
+
+---
+layout: default
+---
+
+```http
+GET /profiles HTTP/1.1
+
+200 OK
+Content-Type: application/hal+json
+```
+```json
+{
+  "_links": {
+    "self": { "href": "http://herobook/profiles?index=0&count=5" },
+    "next": { "href": "http://herobook/profiles?index=5&count=5" },
+    "last": { "href": "http://herobook/profiles?index=220&count=5" }
+  },
+  "count": 5,
+  "index": 0,
+  "total": 223,
+  "items": [
+    { "username": "ironman", "name": "Tony Stark" },
+    { "username": "Blackwidow", "name": "Natalia Romanova" },
+    { "username": "spidey", "name": "Peter Parker" },
+    { "username": "cap", "name": "Steve Rogers" },
+    { "username": "storm", "name": "Ororo Munroe" }
+  ]
+}
+
+```
+
+---
+layout: default
+---
+
+```http
+GET /profiles/ironman HTTP/1.1
+
+200 OK
+Content-Type: application/json
+```
+```json
+{
+  "username": "ironman",
+  "name": "Tony Stark",
+  "friends" : [
+    { "username":"ironman", "name":"Tony Stark" },
+    { "username":"spidey", "name":"Peter Parker" },
+    { "username":"blackwidow", "name":"Ната́ша Романов" },
+    /* another 500 friends here//. */
+  ]
+}
+```
+
+
+---
+layout: default
+---
+
+```http
+GET /profiles/ironman HTTP/1.1
+
+200 OK
+Content-Type: application/json
+```
+```json
+{
+  "username": "ironman",
+  "name": "Tony Stark",
+  "friends" : [
+    { "username":"hulk", "name":"Bruce Banner" },
+    { "username":"spidey", "name":"Peter Parker" },
+    { "username":"blackwidow", "name":"Ната́ша Романов" },
+    /* another 500 friends here//. */
+  ],
+  "updates" : [
+    { 
+      "id" : 1234,
+      "update" : "Working a new Iron Man suit!",
+      "posted" : "2016-02-23T18:25:43.511Z"
+    },
+    {
+      "id" : 1543,
+      "update" : "New suit's gonna have a selfie stick! Oh yeah!",
+      "posted" : "2016-04-16T18:25:43.511Z"
+    },
+    { 
+      "id" : 1782,
+      "update" : "Selfie stick broke. Oh well. Back to the drawing board",
+      "posted" : "2016-04-17T08:26:13.511Z"
+    }
+  ]
+}
+```
+
+<style>
+pre.language-json {
+  font-size: 2
+}
+</style>
+
+
+---
 Richardson Maturity Model
 
 https://martinfowler.com/articles/richardsonMaturityModel.html#level1
