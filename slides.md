@@ -1210,7 +1210,7 @@ Content-Type: application/json
 
 ---
 layout: image-right
-image: overview.png
+image: overview2.png
 ---
 
 <v-click>
@@ -1283,14 +1283,199 @@ HTTP/1.1 200 OK
 
 ==> RMM Level 0
 
+~~Identification of Resources~~ | 
+~~Manipulation through representation~~ |
+~~Self-descriptive messages~~ |
+~~Hypermedia as the engine of application state~~
+
 </template>
 
 ---
-layout: default
+layout: two-cols
 ---
+
+<template v-slot:default>
 
 # Richardson Maturity Model
 
 ## Level 1
 
+```http
+POST /doctors/mjones HTTP/1.1
+[various other headers]
 
+<openSlotRequest date = "2010-01-04"/>
+
+200 OK
+[various headers]
+
+<openSlotList>
+  <slot id="1234" doctor="mjones" start="1400" end="1450"/>
+  <slot id="5678" doctor="mjones" start="1600" end="1650"/>
+</openSlotList>
+```
+
+</template>
+
+<template v-slot:right>
+
+```http
+POST /slots/1234 HTTP/1.1
+[various other headers]
+
+<appointmentRequest>
+  <patient id = "jsmith"/>
+</appointmentRequest>
+
+200 OK
+[various headers]
+
+<appointment>
+  <slot id = "1234" doctor = "mjones" start = "1400" end = "1450"/>
+  <patient id = "jsmith"/>
+</appointment>
+```
+
+http://royalhope.nhs.uk/slots/1234/appointment
+
+==> RMM Level 1
+
+Identification of Resources | 
+Manipulation through representation |
+~~Self-descriptive messages~~ |
+~~Hypermedia as the engine of application state~~
+
+
+</template>
+
+---
+layout: two-cols
+---
+
+<template v-slot:default>
+
+# Richardson Maturity Model
+
+## Level 2
+
+```http
+GET /doctors/mjones/slots?date=20100104&status=open HTTP/1.1
+Host: royalhope.nhs.uk
+
+HTTP/1.1 200 OK
+[various headers]
+
+<openSlotList>
+  <slot id = "1234" doctor = "mjones" start = "1400" end = "1450"/>
+  <slot id = "5678" doctor = "mjones" start = "1600" end = "1650"/>
+</openSlotList>
+```
+
+==> RMM Level 2
+
+Identification of Resources | 
+Manipulation through representation |
+Self-descriptive messages |
+~~Hypermedia as the engine of application state~~
+
+
+</template>
+
+<template v-slot:right>
+
+```http
+POST /slots/1234 HTTP/1.1
+[various other headers]
+
+<appointmentRequest>
+  <patient id = "jsmith"/>
+</appointmentRequest>
+
+201 Created
+Location: slots/1234/appointment
+[various headers]
+
+<appointment>
+  <slot id = "1234" doctor = "mjones" start = "1400" end = "1450"/>
+  <patient id = "jsmith"/>
+</appointment>
+---
+409 Conflict
+[various headers]
+
+<openSlotList>
+  <slot id = "5678" doctor = "mjones" start = "1600" end = "1650"/>
+</openSlotList>
+```
+
+</template>
+
+---
+layout: two-cols
+---
+
+<template v-slot:default>
+
+# Richardson Maturity Model
+
+## Level 3
+
+```http
+GET /doctors/mjones/slots?date=20100104&status=open HTTP/1.1
+Host: royalhope.nhs.uk
+
+200 OK
+[various headers]
+
+<openSlotList>
+  <slot id = "1234" doctor = "mjones" start = "1400" end = "1450">
+     <link rel = "/linkrels/slot/book" 
+           uri = "/slots/1234"/>
+  </slot>
+  <slot id = "5678" doctor = "mjones" start = "1600" end = "1650">
+     <link rel = "/linkrels/slot/book" 
+           uri = "/slots/5678"/>
+  </slot>
+</openSlotList>
+```
+
+Identification of Resources | 
+Manipulation through representation |
+Self-descriptive messages |
+Hypermedia as the engine of application state
+
+</template>
+
+<template v-slot:right>
+
+```http
+POST /slots/1234 HTTP/1.1
+[various other headers]
+
+<appointmentRequest>
+  <patient id = "jsmith"/>
+</appointmentRequest>
+
+201 Created
+Location: http://royalhope.nhs.uk/slots/1234/appointment
+[various headers]
+
+<appointment>
+  <slot id = "1234" doctor = "mjones" start = "1400" end = "1450"/>
+  <patient id = "jsmith"/>
+  <link rel = "/linkrels/appointment/cancel"
+        uri = "/slots/1234/appointment"/>
+  <link rel = "/linkrels/appointment/addTest"
+        uri = "/slots/1234/appointment/tests"/>
+  <link rel = "self"
+        uri = "/slots/1234/appointment"/>
+  <link rel = "/linkrels/appointment/changeTime"
+        uri = "/doctors/mjones/slots?date=20100104&status=open"/>
+  <link rel = "/linkrels/appointment/updateContactInfo"
+        uri = "/patients/jsmith/contactInfo"/>
+  <link rel = "/linkrels/help"
+        uri = "/help/appointment"/>
+</appointment>
+```
+
+</template>
