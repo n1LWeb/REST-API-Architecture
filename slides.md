@@ -1130,13 +1130,17 @@ GET /profiles/ironman/photos/1456/comments HTTP/1.1
 layout: cover
 # random image from a curated Unsplash collection by Anthony
 # like them? see https://unsplash.com/collections/94734566/slidev
-background: Betriebsausflug_2018_223_jpg.jpg
+background: ATU.jpg
 # apply any windi css classes to the current slide
 class: 'text-center'
 ---
 
-## Nur eine Anfrage auf eure dämliche API, und auf dem Server laufen die Arbeitsspeicher-Riegel davon! <br/>
+## Wieso braucht ihr eigentlich 92 API Calls um eine Webseite anzuzeigen?
 
+<br/>
+<br/>
+<br/>
+<br/>
 <br/>
 <br/>
 <br/>
@@ -1155,19 +1159,133 @@ class: 'text-center'
 
 <v-click>
 
-# Solche Probleme hatten wir mit dem GWQ Portal nicht!
+# Tolle Idee!
 
 </v-click>
 
 ---
+layout: default
+---
+
+```http
+GET /profiles/ironman?expand=updates HTTP/1.1
+
+200 OK
+Content-Type: application/json
+```
+```json
+{
+  "_links": {
+    "self": { "href": "/profiles/ironman"},
+    "friends": { "href": "/profiles/ironman/friends" },
+    "photos": { "href": "/profiles/ironman/photos" },
+    "updates": { "href": "/profiles/ironman/updates" },
+  }
+  "username": "ironman",
+  "name": "Tony Stark",
+  "_embedded":{
+    "updates" : [
+      {
+        "update" : "Working a new Iron Man suit – with a built-in selfie stick!",
+        "posted" : "2016-02-23T18:25:43.511Z"
+      },
+      {
+        "update" : "Selfie stick broke. Oh well. Back to the drawing board",
+        "posted" : "2016-04-17T08:26:13.511Z"
+      }
+    ]
+  }
+}
+```
 
 ---
+
+# Dann machen wir eben kein REST!
+
+<v-click>
+
+## Was machen wir denn dann?
+
+</v-click>
+
+<v-click>
+
 Richardson Maturity Model
 
 https://martinfowler.com/articles/richardsonMaturityModel.html#level1
 
-0 – exporting an API over HTTP with methods called with arguments
-1 – Exporting resources instead of methods
-2 – Proper use of HTTP verbs
-3 – Exporting hypertext with objects that make all or part of the API discoverable.
+0. – exporting an API over HTTP with methods called with arguments
+
+1. – Exporting resources instead of methods
+2. – Proper use of HTTP verbs
+
+3. – Exporting hypertext with objects that make all or part of the API discoverable.
+
+</v-click>
+
+---
+layout: two-cols
+---
+
+<template v-slot:default>
+
+# Richardson Maturity Model
+
+## Level 0
+
+```http
+POST /appointmentService HTTP/1.1
+[various other headers]
+<openSlotRequest date = "2010-01-04" doctor = "mjones"/>
+
+200 OK
+[various headers]
+
+<openSlotList>
+  <slot start = "1400" end = "1450">
+    <doctor id = "mjones"/>
+  </slot>
+  <slot start = "1600" end = "1650">
+    <doctor id = "mjones"/>
+  </slot>
+</openSlotList>
+```
+
+</template>
+
+<template v-slot:right>
+
+```http
+HTTP/1.1 200 OK
+[various headers]
+
+<appointment>
+  <slot doctor = "mjones" start = "1400" end = "1450"/>
+  <patient id = "jsmith"/>
+</appointment>
+
+200 OK
+[various headers]
+
+<appointmentRequestFailure>
+  <slot doctor = "mjones" start = "1400" end = "1450"/>
+  <patient id = "jsmith"/>
+  <reason>Slot not available</reason>
+</appointmentRequestFailure>
+```
+
+==> RPC over HTTP
+
+==> RMM Level 0
+
+</template>
+
+---
+layout: default
+---
+
+# Richardson Maturity Model
+
+## Level 1
+
 
