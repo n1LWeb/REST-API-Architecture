@@ -673,7 +673,8 @@ GET / HTTP/1.1
 200 OK
 Content-Type: application/hal+json
 ```
-```json{
+```json
+{
   "message": "Welcome to Herobook!"
 }
 
