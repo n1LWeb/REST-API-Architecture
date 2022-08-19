@@ -1208,6 +1208,11 @@ Content-Type: application/json
 
 </v-click>
 
+---
+layout: image-right
+image: overview.png
+---
+
 <v-click>
 
 Richardson Maturity Model
